@@ -1,25 +1,36 @@
 {
-  "name": "@patente/server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "dev": "tsx watch server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/express": "^4.17.14",
-    "@types/express-serve-static-core": "^4.17.31",
-    "tsconfig": "workspace:*",
-    "tsup": "^6.3.0",
-    "tsx": "^3.10.3",
-    "typescript": "^4.8.4"
-  },
-  "dependencies": {
-    "express": "^4.18.2",
-    "@patente/ui-engine": "workspace:*"
-  }
+    "name": "@patente/server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "copy-ui-engine": "cp node_modules/@patente/ui-engine/dist/patente.min.js public/patente.min.js",
+        "dev": "pnpm run copy-ui-engine && nodemon --watch views --watch src -e njk,js,ts,tsx --exec \"tsx\" server.ts",
+        "build": "tsup src/index.ts && pnpm run build:types && pnpm run copy-ui-engine",
+        "build:types": "tsc  --emitDeclarationOnly",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/express": "^4.17.14",
+        "@types/express-serve-static-core": "^4.17.31",
+        "@types/showdown": "^2.0.0",
+        "nodemon": "^2.0.20",
+        "prettier": "^2.7.1",
+        "tsconfig": "workspace:*",
+        "tsup": "^6.3.0",
+        "tsx": "^3.10.3",
+        "typescript": "^4.8.4"
+    },
+    "dependencies": {
+        "@patente/ui-engine": "workspace:*",
+        "express": "^4.18.2",
+        "htm": "^3.1.1",
+        "preact": "^10.10.6",
+        "preact-render-to-string": "^5.2.6",
+        "showdown": "^2.1.0"
+    }
 }

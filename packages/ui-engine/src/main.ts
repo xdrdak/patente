@@ -34,7 +34,7 @@ export default function Patente(opt: { mount?: Element } = {}) {
     coreIterable.next();
   }
 
-  function register(
+  function registerComponent(
     name: string,
     cb: (builtins: {
       render: typeof renderEl;
@@ -51,7 +51,7 @@ export default function Patente(opt: { mount?: Element } = {}) {
     });
   }
 
-  register("__error", ({ html, render }) => {
+  registerComponent("__error", ({ html, render }) => {
     return function* (opt: { errorMessage: string }) {
       const Component = (props: { message: string }) => {
         return html`<div>
@@ -66,7 +66,10 @@ export default function Patente(opt: { mount?: Element } = {}) {
   });
 
   return {
-    register,
+    next,
+    hooks,
+    html,
+    registerComponent,
     run(generatorFn: PatenteGeneratorFn) {
       const proxyUI = new Proxy(ui, {
         get(target, prop, receiver) {
@@ -101,7 +104,7 @@ export default function Patente(opt: { mount?: Element } = {}) {
 if (import.meta.env.DEV) {
   const instance = Patente({ mount: document.querySelector("#app")! });
 
-  instance.register(
+  instance.registerComponent(
     "input",
     ({ html, render, hooks, next }) =>
       function* ({ label }) {
@@ -135,7 +138,7 @@ if (import.meta.env.DEV) {
       },
   );
 
-  instance.register(
+  instance.registerComponent(
     "spinner",
     ({ html, render }) =>
       function* () {
@@ -150,7 +153,7 @@ if (import.meta.env.DEV) {
       },
   );
 
-  instance.register(
+  instance.registerComponent(
     "text",
     ({ html, render }) =>
       function* (opt: { content: string }) {

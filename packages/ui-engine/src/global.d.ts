@@ -1,7 +1,8 @@
-export {}
+export {};
 
 declare global {
-    interface Window {
-        iter: any
-    }
+  interface Window {
+    iter: any;
+  }
 }
+

@@ -1,6 +1,7 @@
 import { resolve } from "path";
 import { defineConfig } from "vite";
 import preact from "@preact/preset-vite";
+import importHttp from 'import-http';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,9 +12,9 @@ export default defineConfig({
       entry: resolve(__dirname, "src/main.ts"),
       name: "Patente",
       formats: ["iife"],
-      // the proper extensions will be added
     },
     rollupOptions: {
+      plugins: [importHttp],
       output: {
         entryFileNames: `patente.min.js`,
       },
