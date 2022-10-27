@@ -9,6 +9,15 @@ function useId() {
     return id;
 }
 
+export function Stack(props) {
+    const style = {
+        display: "flex",
+        flexDirection: "column",
+        gap: "8px",
+    };
+    return html`<div style=${style}>${props.children}</div> `;
+}
+
 export function Button(props) {
     const { children, ...rest } = props;
     return html` <button class="btn btn-primary" ...${rest}>
@@ -96,4 +105,38 @@ export function Radios(props) {
             return html`<${Radio} ...${restOption}>${content}<//>`;
         })}
     </div>`;
+}
+
+const componentDictionary = {
+    textarea: Textarea,
+    input: Input,
+};
+
+export function FormSchema(props) {
+    const onSubmit = (evt) => {
+        evt.preventDefault();
+        const formData = new FormData(evt.target);
+        const formJsonData = {};
+        for (const [key, value] of formData.entries()) {
+            formJsonData[key] = value;
+        }
+
+        props.callback(formJsonData);
+    };
+
+    return html`<form onSubmit=${onSubmit}>
+        <${Stack}>
+            ${props.schema.map((entry) => {
+                const Component = componentDictionary[entry.type];
+                const { content, ...rest } = entry.props;
+
+                if (!Component) {
+                    return html`<div>Could not find ${entry.type}</div>`;
+                }
+
+                return html`<${Component} ...${rest}>${content}<//>`;
+            })}
+            <div><${Button} type="submit">Submit<//></div>
+        <//>
+    </form>`;
 }

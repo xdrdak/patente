@@ -1,12 +1,23 @@
-import { post } from '/static-assets/fetcher.js'
+import { post } from "/static-assets/fetcher.js";
 
 export default async function* ({ ui }) {
-    const workflowName = yield* ui.input({ label: "Workflow Name" });
+    const payload = yield* ui.form({
+        schema: [
+            { type: "input", props: { label: "Workflow Name", name: "name" } },
+            {
+                type: "input",
+                props: { label: "Workflow Author", name: "author" },
+            },
+            {
+                type: "textarea",
+                props: { label: "Workflow Description", name: "description" },
+            },
+        ],
+    });
 
     yield* ui.spinner();
 
-    const json = post('/api/create-workflow', { workflowName });
-
+    const json = await post("/api/create-workflow", payload);
     console.log(json);
 
     yield* ui.text({

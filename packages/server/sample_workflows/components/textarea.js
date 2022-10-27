@@ -1,4 +1,4 @@
-import { Button, Input, Stack } from "/static-assets/bs-components.js";
+import { Button, Textarea, Stack } from "/static-assets/bs-components.js";
 
 export default function component({ render, hooks, next, html }) {
     return function* ({ label }) {
@@ -11,7 +11,7 @@ export default function component({ render, hooks, next, html }) {
             };
 
             return html`<${Stack}>
-                <${Input}
+                <${Textarea}
                     label=${props.label ?? "(no label set)"}
                     ref=${ref}
                 ><//>

@@ -1,4 +1,4 @@
-import { JSX, render, VNode } from "preact";
+import { JSX, render, VNode, Component } from "preact";
 import * as hooks from "preact/hooks";
 import { html } from "htm/preact";
 
@@ -69,6 +69,7 @@ export default function Patente(opt: { mount?: Element } = {}) {
     next,
     hooks,
     html,
+    Component,
     registerComponent,
     run(generatorFn: PatenteGeneratorFn) {
       const proxyUI = new Proxy(ui, {

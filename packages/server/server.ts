@@ -16,11 +16,19 @@ const patente = createPatente({
 });
 
 patente.express.post("/api/create-workflow", (req, res) => {
-  const workflowName = req.body?.workflowName;
+  const workflowName = req.body?.name;
+  const author = req.body?.author ?? "<your_name>";
+  const description = req.body?.description ??
+    `This is a description for ${workflowName}`;
+
   fs.writeFileSync(
     path.join(workflowDir, `${workflowName}.js`),
     `export default function workflowFunction({ html, render }) {
-  return function* (opt) {};
+  return function* (opt) {
+     yield* opt.ui.text({
+        content: "sample text",
+    });
+  };
 };
 `,
   );
@@ -28,10 +36,10 @@ patente.express.post("/api/create-workflow", (req, res) => {
   fs.writeFileSync(
     path.join(workflowDir, `${workflowName}.md`),
     `---
-author: <your_name>
+author: ${author}
 title: ${workflowName}
 ---
-This is the description for ${workflowName}.
+${description}
 `,
   );
 
