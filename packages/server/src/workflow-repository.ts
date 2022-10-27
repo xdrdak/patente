@@ -2,6 +2,12 @@ import fs from "fs";
 import path from "path";
 import Showdown from "showdown";
 
+function filterByExtension(ext: string) {
+  return function predicate(s: string) {
+    return s.endsWith(`.${ext}`);
+  };
+}
+
 export function createWorkflowRepository(workflowDir: string) {
   const dir = workflowDir;
   const componentDir = path.join(workflowDir, "components");
@@ -46,14 +52,14 @@ export function createWorkflowRepository(workflowDir: string) {
         fs.promises.readdir(componentDir).catch(() => []),
       ]);
 
-      const scripts = files.filter((f) => f.endsWith(".js"));
-      const readmes = files.filter((f) => f.endsWith(".md"));
+      const scripts = files.filter(filterByExtension("js"));
+      const readmes = files.filter(filterByExtension("md"));
 
       return {
         files,
         scripts,
         readmes,
-        components,
+        components: components.filter(filterByExtension("js")),
       };
     },
     async listWorkflows() {

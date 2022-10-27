@@ -1,8 +1,8 @@
-import { patente } from "/public/workflow.js";
+import { patente, html } from "/public/workflow.js";
 
 patente.registerComponent(
   "input",
-  ({ html, render, hooks, next }) =>
+  ({ render, hooks, next }) =>
     function* ({ label }) {
       let data = null;
       const Component = (props) => {

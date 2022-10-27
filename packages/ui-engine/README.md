@@ -51,6 +51,10 @@ const instance = Patente({ mount: document.querySelector("#app")! });
 instance.registerComponent(
     "input",
     // These are some injected helper methods
+    // html: is basically preact jsx, but as string templates
+    // hooks: is all preact hooks
+    // render: allows you to mount your component to the screen
+    // next: unpauses execution and forces the engine to go to the next screen
     ({ html, hooks, render, next }) => {
         // This is the callback function that will be registered to our component name
         // Whenever we invoke `ui.input`, this is the callback function that will get executed

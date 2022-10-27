@@ -6,7 +6,7 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "copy-ui-engine": "cp node_modules/@patente/ui-engine/dist/patente.min.js public/patente.min.js",
-        "dev": "pnpm run copy-ui-engine && nodemon --watch views --watch src -e njk,js,ts,tsx --exec \"tsx\" server.ts",
+        "dev": "pnpm run copy-ui-engine && nodemon --watch views --watch src --watch server.ts -e js,ts,tsx --exec \"tsx\" server.ts",
         "build": "tsup src/index.ts && pnpm run build:types && pnpm run copy-ui-engine",
         "build:types": "tsc  --emitDeclarationOnly",
         "test": "echo \"Error: no test specified\" && exit 1"
